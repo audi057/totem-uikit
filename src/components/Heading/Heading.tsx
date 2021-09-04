@@ -10,10 +10,10 @@ const style = {
     fontSize: "24px",
   },
   [sizes.XL]: {
-    fontSize: "32px",
+    fontSize: "40px",
   },
   [sizes.XXL]: {
-    fontSize: "40px",
+    fontSize: "64px",
   },
 };
 

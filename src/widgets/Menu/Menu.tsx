@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled, { DefaultTheme } from "styled-components";
+import styled from "styled-components";
 import throttle from "lodash/throttle";
 import Overlay from "../../components/Overlay/Overlay";
 import { Flex } from "../../components/Flex";
@@ -10,13 +10,6 @@ import UserBlock from "./UserBlock";
 import { NavProps } from "./types";
 import { MENU_HEIGHT, SIDEBAR_WIDTH_REDUCED, SIDEBAR_WIDTH_FULL } from "./config";
 import Avatar from "./Avatar";
-import { useLocation } from "react-router";
-import MenuLink from "./MenuLink";
-
-export interface Props {
-  isActive?: boolean;
-  theme: DefaultTheme;
-}
 
 const Wrapper = styled.div`
   position: relative;
@@ -35,7 +28,7 @@ const StyledNav = styled.nav<{ showMenu: boolean }>`
   padding-right: 16px;
   width: 100%;
   height: ${MENU_HEIGHT}px;
-  // background-color: ${({ theme }) => theme.nav.background};
+  background-color: ${({ theme }) => theme.nav.background};
   border-bottom: solid 2px rgba(133, 133, 133, 0.1);
   z-index: 20;
   transform: translate3d(0, 0, 0);
@@ -51,6 +44,9 @@ const Inner = styled.div<{ isPushed: boolean; showMenu: boolean }>`
   margin-top: ${({ showMenu }) => (showMenu ? `${MENU_HEIGHT}px` : 0)};
   transition: margin-top 0.2s;
   transform: translate3d(0, 0, 0);
+  ${({ theme }) => theme.mediaQueries.nav} {
+    margin-left: ${({ isPushed }) => `${isPushed ? SIDEBAR_WIDTH_FULL : SIDEBAR_WIDTH_REDUCED}px`};
+  }
 `;
 
 const MobileOnlyOverlay = styled(Overlay)`
@@ -59,37 +55,6 @@ const MobileOnlyOverlay = styled(Overlay)`
 
   ${({ theme }) => theme.mediaQueries.nav} {
     display: none;
-  }
-`;
-
-
-const StyledLinkContainer = styled.div`
-  display: none;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    width: 100%;
-    display: flex;
-  }
-`;
-
-const StyledNavLink = styled.div<Props>`
-  display: flex;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  padding-left: 15px;
-  padding-right: 15px;
-  text-decoration: none;
-  cursor: pointer;
-  color: ${({ isActive, theme }) => (isActive ? `${theme.colors.primary}` : "#c8c8c8")};
-
-  &:hover {
-    color: #eee;
-  }
-
-  &:active {
-    color: ${({ theme }) => `${theme.colors.primary}`};
   }
 `;
 
@@ -104,7 +69,6 @@ const Menu: React.FC<NavProps> = ({
   currentLang,
   cakePriceUsd,
   links,
-  socilas,
   priceLink,
   profile,
   children,
@@ -114,7 +78,6 @@ const Menu: React.FC<NavProps> = ({
   const [isPushed, setIsPushed] = useState(!isMobile);
   const [showMenu, setShowMenu] = useState(true);
   const refPrevOffset = useRef(window.pageYOffset);
-  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -153,42 +116,10 @@ const Menu: React.FC<NavProps> = ({
       <StyledNav showMenu={showMenu}>
         <Logo
           isPushed={isPushed}
-          isMobile={isMobile}
           togglePush={() => setIsPushed((prevState: boolean) => !prevState)}
           isDark={isDark}
           href={homeLink?.href ?? "/"}
         />
-        <StyledLinkContainer>
-          {
-            socilas.map(entry => {
-              return (
-                <StyledNavLink key={entry.href} isActive={entry.href === location.pathname}>
-                  <MenuLink href={entry.href}>
-                    <div style={{ display: 'flex', margin: 'auo' }}>
-                      <img style={{ height: '30px' }} src={entry.imageLink}></img>
-                    </div>
-                  </MenuLink>
-                </StyledNavLink>
-              )
-            })
-          }
-        </StyledLinkContainer>
-        <StyledLinkContainer>
-          {
-            links.map(entry => {
-              return (
-                <StyledNavLink key={entry.href} isActive={entry.href === location.pathname}>
-                  <MenuLink href={entry.href}>
-                    <div style={{display: 'flex', margin: 'auo'}}>
-                      <img style={{height: '30px'}} src={entry.imageLink}></img>
-                      <div style={{margin: 'auto', marginLeft: '5px'}}>{entry.label}</div>
-                    </div>
-                  </MenuLink>
-                </StyledNavLink>
-              )
-            })
-          }
-        </StyledLinkContainer>
         <Flex>
           <UserBlock account={account} login={login} logout={logout} />
           {profile && <Avatar profile={profile} />}
@@ -207,7 +138,6 @@ const Menu: React.FC<NavProps> = ({
           cakePriceUsd={cakePriceUsd}
           pushNav={setIsPushed}
           links={links}
-          socilas={socilas}
           priceLink={priceLink}
         />
         <Inner isPushed={isPushed} showMenu={showMenu}>

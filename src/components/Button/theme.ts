@@ -25,8 +25,8 @@ export const light: ButtonTheme = {
     color: lightColors.primary,
   },
   [TERTIARY]: {
-    background: "transparent",
-    backgroundActive: "transparent",
+    background: lightColors.tertiary,
+    backgroundActive: lightColors.tertiary,
     backgroundHover: lightColors.tertiary,
     border: 0,
     borderColorHover: "currentColor",

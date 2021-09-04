@@ -22,7 +22,7 @@ const Container = styled.div`
   height: 100%;
 `;
 
-const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links, socilas }) => {
+const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links }) => {
   const location = useLocation();
 
   // Close the menu when a user clicks a link on mobile
@@ -64,39 +64,6 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links, socila
           </MenuEntry>
         );
       })}
-      <div style={{ display: 'flex' }}>
-        {socilas.map((entry) => {
-          const Icon = Icons[entry.icon];
-          const iconElement = <Icon width="24px" mr="8px" />;
-          const calloutClass = entry.calloutClass ? entry.calloutClass : undefined;
-
-          if (entry.items) {
-            return (
-              <>
-                {isPushed &&
-                  entry.items.map((item) => (
-                    <MenuEntry key={item.href} secondary isActive={item.href === location.pathname} onClick={handleClick}>
-                      <MenuLink href={entry.href}>
-                        <div style={{ display: 'flex', margin: 'auo' }}>
-                          <img style={{ height: '30px' }} src={entry.imageLink}></img>
-                        </div>
-                      </MenuLink>
-                    </MenuEntry>
-                  ))}
-              </>
-            );
-          }
-          return (
-            <MenuEntry key={entry.label} isActive={entry.href === location.pathname} className={calloutClass}>
-              <MenuLink href={entry.href} onClick={handleClick}>
-                <div style={{ display: 'flex', margin: 'auo' }}>
-                  <img style={{ height: '25px' }} src={entry.imageLink}></img>
-                </div>
-              </MenuLink>
-            </MenuEntry>
-          );
-        })}
-      </div>
     </Container>
   );
 };

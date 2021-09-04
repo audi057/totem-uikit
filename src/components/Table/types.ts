@@ -91,7 +91,6 @@ export interface UseTableOptionsType<T> {
   sortable?: boolean;
   selectable?: boolean;
   pagination?: boolean;
-  sortColumn?: string;
   filter?: (row: RowType<T>[]) => RowType<T>[];
 }
 
@@ -125,7 +124,7 @@ export type TableState<T extends DataType> = {
   originalRows: RowType<T>[];
   selectedRows: RowType<T>[];
   filterOn: boolean;
-  sortColumn: string | null | undefined;
+  sortColumn: string | null;
   toggleAllState: boolean;
   pagination: PaginatorType;
   paginationEnabled: boolean;

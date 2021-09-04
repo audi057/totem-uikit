@@ -95,25 +95,10 @@ const createReducer = <T extends DataType>() => (state: TableState<T>, action: T
         rows = getPaginatedData(rows, state.pagination.perPage, state.pagination.page);
       }
 
-      columnCopy = state.columns.map((column) => {
-        if (state.sortColumn === column.name) {
-          return {
-            ...column,
-            sorted: {
-              on: true,
-              asc: column.sorted.asc,
-            },
-          };
-        }
-
-        return column;
-      });
-
       return {
         ...state,
         rows,
         originalRows: action.data,
-        columns: columnCopy,
       };
 
     case "NEXT_PAGE":
@@ -319,7 +304,6 @@ export const useTable = <T extends DataType>(
           sort: column.sort,
           sorted: {
             on: false,
-            asc: false,
           },
         };
       }),
@@ -361,7 +345,7 @@ export const useTable = <T extends DataType>(
     selectedRows: [],
     toggleAllState: false,
     filterOn: !!options?.filter,
-    sortColumn: options?.sortColumn,
+    sortColumn: null,
     paginationEnabled: !!options?.pagination,
     pagination: {
       page: 1,

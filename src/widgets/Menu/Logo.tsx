@@ -8,7 +8,6 @@ import MenuButton from "./MenuButton";
 
 interface Props {
   isPushed: boolean;
-  isMobile: boolean;
   isDark: boolean;
   togglePush: () => void;
   href: string;
@@ -32,23 +31,18 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const StyledLogo = styled.img`
-  margin-left: 24px;
-  margin-right: 64px;
-  max-width: fit-content;
-`;
-
-const Logo: React.FC<Props> = ({ isPushed, isMobile, togglePush, isDark, href, }) => {
+const Logo: React.FC<Props> = ({ isPushed, togglePush, isDark, href }) => {
   const isAbsoluteUrl = href.startsWith("http");
   const innerLogo = (
     <>
-      {isMobile ? <StyledLogo src="/images/egg/mobile_logo.png" width="65px"></StyledLogo> : <StyledLogo src="/images/egg/logo.png" width="205px"></StyledLogo>}
+      <LogoIcon className="mobile-icon" />
+      <LogoWithText className="desktop-icon" isDark={isDark} />
     </>
   );
 
   return (
     <Flex>
-      <MenuButton aria-label="Toggle menu" onClick={togglePush} mr="0px">
+      <MenuButton aria-label="Toggle menu" onClick={togglePush} mr="24px">
         {isPushed ? (
           <HamburgerCloseIcon width="24px" color="textSubtle" />
         ) : (

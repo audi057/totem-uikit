@@ -32,7 +32,6 @@ export interface MenuSubEntry {
 export interface MenuEntry {
   label: string;
   icon: string;
-  imageLink: string;
   items?: MenuSubEntry[];
   href?: string;
   calloutClass?: string;
@@ -47,7 +46,6 @@ export interface PanelProps {
   langs: LangType[];
   setLang: (lang: LangType) => void;
   links: Array<MenuEntry>;
-  socilas: Array<MenuEntry>;
   priceLink: string;
 }
 

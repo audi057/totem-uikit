@@ -59,7 +59,7 @@ const StyledButton = styled.button<ButtonProps>`
   font-weight: 600;
   /* max-content instead of auto for Safari fix */
   width: ${({ fullWidth }) => (fullWidth ? "100%" : "max-content")};
-  height: ${({ size }) => (size==="sm" ? "32px" : "48px")};;
+  height: ${({ size }) => (size === "sm" ? "32px" : "48px")};
   line-height: 1;
   letter-spacing: 0.03em;
   justify-content: center;
